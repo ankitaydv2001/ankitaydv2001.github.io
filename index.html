@@ -784,39 +784,18 @@
 
                         <!--h3 id="msg">Drop me a message</h3-->
                         
-                        <form>
-                            <div>
-                                <!--label for="sampleInput">Your name</label-->
-                                <input class="u-fullwidth" type="text" placeholder="    ENTER YOUR NAME" id="sampleInput">
-                                <!--input class="u-fullwidth" type="email" placeholder="YOUR EMAIL" id="sampleInput"-->
-                            </div>
-                            <div>
-                        <!--label for="sampleInput">Your email</label-->
-                                <input class="u-fullwidth" type="email" placeholder="    ENTER YOUR EMAIL" id="sampleInput">
-                            </div>
-                            <div>
-                                <!--label for="sampleRecipientInput">Reason for contacting</label-->
-                                <input class="u-fullwidth" type="text" placeholder="    ENTER SUBJECT" id="sampleInput">
-                                <!--div class="ss-custom-select">
-                                    <select class="u-fullwidth" id="sampleRecipientInput">
-                                        <option value="Option 1">QUESTIONS</option>
-                                        <option value="Option 2">REPORT</option>
-                                        <option value="Option 3">OTHERS</option>
-                                    </select>
-                                </div-->
-                            </div>
-                            <div>
-                                <!--label for="exampleMessage">Message</label-->
-                                <textarea class="u-fullwidth" placeholder="    ENTER YOUR MESSAGE" id="exampleMessage"></textarea>
-
-                                <!--label class="u-add-bottom">
-                                    <input type="checkbox">
-                                    <span class="label-text">Send a copy to yourself</span>
-                                </label-->
-                            </div>
-                            <input class="btn--primary u-fullwidth" type="submit" value="SUBMIT">
+                        <form id="contact-form">
+                                <input class="u-fullwidth" name="name" type="text" placeholder="    ENTER YOUR NAME" id="sampleInput"  required>
+                                <input class="u-fullwidth" name="email" type="email" placeholder="    ENTER YOUR EMAIL" id="sampleInput" required>
+                                <input class="u-fullwidth" name="subject" type="text" placeholder="    ENTER SUBJECT" id="sampleInput" required>
+                                <textarea class="u-fullwidth" name="message" placeholder="    ENTER YOUR MESSAGE" id="exampleMessage" required></textarea>
+                                <button class="btn--primary u-fullwidth" type="submit" value="SUBMIT">SUBMIT</button>
                         </form>
-                    
+<!--
+                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfAvIbT9bJktgNks0QyP7XSA--0w8Z5vvwkn5KatOxGjeQ-zg/viewform?embedded=true" width="640" height="821" frameborder="0" marginheight="0" marginwidth="0">
+                            Loading…
+                        </iframe>
+-->                  
                     </div>
 
                 </div> <!-- end row -->
@@ -898,6 +877,31 @@
     ================================================== -->
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+        
+            const formData = new URLSearchParams(new FormData(this)); // Use URLSearchParams for URL-encoded format
+        
+            fetch('https://script.google.com/macros/s/AKfycbwOr92-MLAwlMiNBLEz263iRBfxnlvV16I3fcI367JFs3jHNLkvqJdHu2D9FR73JLnWIQ/exec', {
+                method: 'POST',
+                body: formData, // Send data as URL-encoded
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded', // Set content type header
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === 'success') {
+                    alert('Form successfully submitted!');
+                } else {
+                    alert('There was an issue submitting the form.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+        </script>
+        
 
 </body>
 </html>
